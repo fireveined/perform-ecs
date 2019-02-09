@@ -1,0 +1,43 @@
+{
+  "name": "pixi-typescript-boilerplate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/.bin/mocha --opts ./mocha.opts",
+    "watch": "run-script-os",
+    "watch:win32": "watchify -v -p [ tsify ] .\\src\\index.ts -o index.js",
+    "watch:darwin:linux:": "watchify -p [ tsify ] ./src/index.ts -o index.js",
+    "build": "run-script-os",
+    "build:win32": "browserify .\\src\\index.ts -p [ tsify ] > index.js",
+    "start": "http-server",
+    "build:darwin:linux:": "browserify ./src/index.ts -p [ tsify ] > index.js && uglifyjs --output ./index.js  --compress --mangle -- ./index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/gl-matrix": "^2.4.1",
+    "browserify": "^16.2.2",
+    "event-emitter": "^0.3.5",
+    "gl-matrix": "^2.7.1",
+    "http-server": "^0.11.1",
+    "reflect-metadata": "^0.1.12",
+    "resource-loader": "^2.1.1",
+    "tsify": "^4.0.0",
+    "twgl.js": "^4.4.0",
+    "typedi": "^0.8.0",
+    "typescript": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.5",
+    "@types/sinon": "^7.0.5",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "run-script-os": "^1.0.3",
+    "sinon": "^7.2.3",
+    "sinon-chai": "^3.3.0",
+    "ts-node": "^8.0.2",
+    "watchify": "^3.11.0"
+  }
+}

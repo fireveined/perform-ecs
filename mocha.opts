@@ -1,0 +1,3 @@
+--compilers ts:ts-node/register
+test/mocha-globals.js
+test/**/*.ts

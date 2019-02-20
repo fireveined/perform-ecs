@@ -25,3 +25,9 @@ export class TestVelocityComponent extends Component {
     }
 
 }
+
+@makeComponent
+export class TestEmptyComponent extends Component {
+    public reset(obj: this): void {
+    }
+}

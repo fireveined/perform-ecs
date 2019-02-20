@@ -6,13 +6,17 @@ import sinon from "sinon";
 
 describe('Systems', function () {
 
-    const ecs = new ECS();
-    const positionSystem = new TestPositionSystem();
-    const velocitySystem = new TestVelocitySystem();
-    ecs.registerSystem(positionSystem);
-    ecs.registerSystem(velocitySystem);
+    let ecs: ECS;
+    let positionSystem: TestPositionSystem;
+    let velocitySystem: TestVelocitySystem;
 
     it("has updated views after entity is added to ECS", () => {
+        ecs = new ECS();
+        positionSystem = new TestPositionSystem();
+        velocitySystem = new TestVelocitySystem();
+        ecs.registerSystem(positionSystem);
+        ecs.registerSystem(velocitySystem);
+
         const entity = ecs.createEntity([
             {component: TestPositionComponent},
             {component: TestVelocityComponent}]);
@@ -27,11 +31,15 @@ describe('Systems', function () {
     });
 
     it("has triggered onEntityAdded when entity is added", () => {
-        const onEntityAddedPosition = sinon.fake();
-        positionSystem.onEntityAdded = onEntityAddedPosition;
+        ecs = new ECS();
+        positionSystem = new TestPositionSystem();
+        velocitySystem = new TestVelocitySystem();
 
-        const onEntityAddedVelocity = sinon.fake();
-        velocitySystem.onEntityAdded = onEntityAddedVelocity;
+        const onEntityAddedPosition = sinon.spy(positionSystem.view, "onEntityAdded");
+        const onEntityAddedVelocity = sinon.spy(velocitySystem.view, "onEntityAdded");
+
+        ecs.registerSystem(positionSystem);
+        ecs.registerSystem(velocitySystem);
 
         const entity = ecs.createEntity([
             {component: TestPositionComponent},
@@ -39,8 +47,10 @@ describe('Systems', function () {
 
         assert(onEntityAddedPosition.calledOnce);
         assert(onEntityAddedPosition.withArgs(entity));
-        assert(onEntityAddedVelocity.calledTwice);
-        assert(onEntityAddedVelocity.alwaysCalledWith(entity));
+        assert(onEntityAddedVelocity.calledOnce);
+        assert(onEntityAddedVelocity.withArgs(entity));
     });
+
+
 
 });

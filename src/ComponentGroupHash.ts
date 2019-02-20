@@ -1,4 +1,4 @@
-import { ComponentConstructor } from './Component';
+import { ComponentConstructor, ComponentInitializator } from './Component';
 
 function bit_test(num: number, bit: number) {
     return ((num >> bit) % 2 != 0)
@@ -23,11 +23,22 @@ export function componentHashHasComponent(hash: ComponentsHash, component: Compo
     return bit_test(hash, component.id);
 }
 
-export function getComponentsHash(components: ComponentConstructor[]): ComponentsHash {
+export function getComponentsHashFromInitializators(components: ComponentInitializator[]): ComponentsHash {
     let num = 0;
     for (const comp of components) {
-        bit_set(num, comp.id);
+        num = bit_set(num, comp.component.id);
     }
     return num;
 }
 
+export function getComponentsHash(components: ComponentConstructor[]): ComponentsHash {
+    let num = 0;
+    for (const comp of components) {
+        num = bit_set(num, comp.id);
+    }
+    return num;
+}
+
+export function componentHashMatch(hash: ComponentsHash, hash2: ComponentsHash): boolean {
+    return (hash2 & hash) === hash2;
+}

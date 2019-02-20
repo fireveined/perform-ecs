@@ -1,10 +1,9 @@
+
+import { componentHashHasComponent, componentHashMatch, getComponentsHash, ComponentsHash } from "./ComponentGroupHash";
 import { ComponentConstructor, ComponentInitializator } from './Component';
 import { Entity } from './Entity';
-import { componentHashHasComponent, getComponentsHash } from "./ComponentGroupHash";
 
-
-export type ComponentsHash = number;
-
+export const aa = {};
 
 export class ComponentsGroup {
     public readonly entities: Entity[];
@@ -38,14 +37,10 @@ export class ComponentsGroup {
         return true;
     }
 
-    public matchInitializators(components: ComponentInitializator[]): boolean {
-        for (const comp of components) {
-            if (!componentHashHasComponent(this.hash, comp.component)) {
-                return false;
-            }
-        }
-        return true;
+    public matchHash(hash: ComponentsHash): boolean {
+        return componentHashMatch(hash, this.hash);
     }
+
 
     public has(component: ComponentConstructor): boolean {
         return componentHashHasComponent(this.hash, component);

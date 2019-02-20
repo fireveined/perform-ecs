@@ -1,9 +1,8 @@
 import { assert } from "chai"
 import { ECS } from "../src/ECS";
-import { TestPositionComponent, TestVelocityComponent } from "./TestComponents";
+import { TestEmptyComponent, TestPositionComponent, TestVelocityComponent } from "./TestComponents";
 import { TestPositionSystem, TestVelocitySystem } from "./TestSystems";
-import sinon from "sinon";
-import { componentHashHasComponent, getComponentsHash } from "../src/ComponentGroupHash";
+import { componentHashHasComponent, componentHashMatch, getComponentsHash } from "../src/ComponentGroupHash";
 
 describe('Component hash', function () {
 
@@ -13,39 +12,27 @@ describe('Component hash', function () {
     ecs.registerSystem(positionSystem);
     ecs.registerSystem(velocitySystem);
 
-    it("matches components", () => {
-
+    it("can by compared to single components", () => {
         const hashOfTwo = getComponentsHash([TestPositionComponent, TestVelocityComponent])
-
         assert(componentHashHasComponent(hashOfTwo, TestVelocityComponent))
-        const entity = ecs.createEntity([
-            {component: TestPositionComponent},
-            {component: TestVelocityComponent}]);
-        assert.deepEqual(positionSystem.view.entities, [entity]);
-        assert.deepEqual(velocitySystem.view.entities, [entity]);
-        assert.deepEqual(velocitySystem.viewOnlyVelocity.entities, [entity]);
-
-        const entity2 = ecs.createEntity([{component: TestPositionComponent}]);
-        assert.deepEqual(positionSystem.view.entities, [entity, entity2]);
-        assert.deepEqual(velocitySystem.view.entities, [entity]);
-        assert.deepEqual(velocitySystem.viewOnlyVelocity.entities, [entity]);
+        assert(componentHashHasComponent(hashOfTwo, TestPositionComponent))
+        assert(!componentHashHasComponent(hashOfTwo, TestEmptyComponent))
     });
 
-    it("has triggered onEntityAdded when entity is added", () => {
-        const onEntityAddedPosition = sinon.fake();
-        positionSystem.onEntityAdded = onEntityAddedPosition;
 
-        const onEntityAddedVelocity = sinon.fake();
-        velocitySystem.onEntityAdded = onEntityAddedVelocity;
-
-        const entity = ecs.createEntity([
-            {component: TestPositionComponent},
-            {component: TestVelocityComponent}]);
-
-        assert(onEntityAddedPosition.calledOnce);
-        assert(onEntityAddedPosition.withArgs(entity));
-        assert(onEntityAddedVelocity.calledTwice);
-        assert(onEntityAddedVelocity.alwaysCalledWith(entity));
+    it("can be matched against many components", () => {
+        const comps: any[] = [];
+        for (let i = 0; i < 10; i++) {
+            comps.push({id: i});
+        }
+        const hash012345 = getComponentsHash(comps.slice(0, 5));
+        const hash0123 = getComponentsHash(comps.slice(0, 3));
+        const hash456 = getComponentsHash(comps.slice(4, 4+3));
+        const hash789 = getComponentsHash(comps.slice(7, 7+3));
+        const hash89 = getComponentsHash(comps.slice(8, 8+2));
+        assert(componentHashMatch(hash012345, hash0123));
+        assert(!componentHashMatch(hash012345, hash89));
+        assert(!componentHashMatch(hash012345, hash456));
+        assert(componentHashMatch(hash789, hash89));
     });
-
 });

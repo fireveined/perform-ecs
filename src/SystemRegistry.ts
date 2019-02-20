@@ -1,4 +1,4 @@
-import { System } from "./System";
+import { ISystem } from "./ISystem";
 import { EntityView } from "./EntityViewFactory";
 import { ComponentGroupRegistry } from "./ComponentGroupRegistry";
 
@@ -7,21 +7,20 @@ function isEntityView(obj: any): obj is EntityView {
 }
 
 export class SystemRegistry {
-    public systems: System[] = [];
+    public systems: ISystem[] = [];
 
-    public register(system: System, groups: ComponentGroupRegistry): void {
+    public register(system: ISystem, groups: ComponentGroupRegistry): void {
         for (let key in system) {
             if (isEntityView((<any>system)[key])) {
                 const view: EntityView = (<any>system)[key];
                 const group = groups.get(view.components);
                 view.entities = group.entities;
-
-                if (system.onEntityAdded) {
-                    group.onEntityAdded.push(system.onEntityAdded.bind(system))
+                if (view.onEntityAdded) {
+                    group.onEntityAdded.push(view.onEntityAdded)
                 }
 
-                if (system.onEntityRemoved) {
-                    group.onEntityRemoved.push(system.onEntityRemoved.bind(system))
+                if (view.onEntityRemoved) {
+                    group.onEntityRemoved.push(view.onEntityRemoved)
                 }
             }
         }

@@ -1,6 +1,10 @@
-export class Entity {
-    public readonly id: number;
+import { ComponentInitializator } from "./Component";
 
-    constructor() {
+export class Entity {
+    public id: number;
+    public components: ComponentInitializator[];
+
+    constructor(components: ComponentInitializator[]) {
+        this.components = components;
     }
 }

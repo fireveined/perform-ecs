@@ -5,12 +5,12 @@ Perform-ecs is a tiny and efficient TypeScript based Component-Entity-System fra
 
 ## Why Entity Component System?
 
-ECS is an architectural pattern used mostly in game development. A ECS follows the Composition over Inheritance principle to allow for greater flexibility when defining entities by building out of individual parts that can be mixed-and-matched. This eliminates the ambiguity problems of long inheritance chains and promotes clean design. 
+ECS is an architectural pattern used mostly in game development. An ECS follows the Composition over Inheritance principle to allow for greater flexibility when defining entities by building out of individual parts that can be mixed-and-matched. This eliminates the ambiguity problems of long inheritance chains and promotes clean design. 
 
 You can read more here [Evolve your hierarchy](http://cowboyprogramming.com/2007/01/05/evolve-your-heirachy/) or here [Entity Systems Wiki](http://entity-systems.wikidot.com/)
 
 ## Features
-- Swift and efficient. The main princpile is 'pay for what you use', so iterating over entities is really fast and you pay only when remove/add entities/components.
+- Swift and efficient. The main principle is 'pay for what you use', so iterating over entities is really fast and you pay only when remove/add entities/components.
 - Easy to use API
 - Full TypeScript support when composing entities from components
 <img src="http://open-stronghold.com/wp-content/ecs_Screen.png" alt="TypeScript Support Screen" width="500"/>
@@ -92,7 +92,7 @@ Coming soon
 - [ ] Documentation
 - [ ] Benchmarks
 - [ ] More valuable tests
-- [ ] Check support for vanila JS
+- [ ] Check support for vanilla JS
 - [ ] Clean codebase
 - [ ] Multiple system views types, suitable for different cases, eg. when entities are removed/added very often.
 

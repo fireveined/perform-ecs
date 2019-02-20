@@ -30,6 +30,8 @@ export class TestPositionComponent extends Component {
     public x: number;
     public y: number;
 
+    // this method will be called on every entity
+    // parameters after the first one can be used for passing some data when creating entity
     public reset(obj: this, multipler: number = 1): void {
         obj.x = 10 * multipler;
         obj.y = 5 * multipler;
@@ -40,6 +42,7 @@ export class TestPositionComponent extends Component {
 export class TestPositionSystem extends System {
 
     // create view which will contain all entities that have 'TestPositionComponent'
+    // types are fully supported here!
     public view = EntityViewFactory.createView({
         components: [TestPositionComponent],
         onEntityAdded: this.onEntityAdded.bind(this),

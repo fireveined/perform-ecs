@@ -80,8 +80,12 @@ assert(entity.y === 5);
 assert(entity2.x === 20);
 assert(entity2.y === 10);
 
+
+// you have to calculate delta on your own - there is no default implementation 
+let delta = 0.01;
+
 // system 'update' methods will be called
-ecs.update();
+ecs.update(delta);
 ```
 
 ## Docs

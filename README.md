@@ -1,7 +1,7 @@
  # perform-ecs  [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php) [![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
  
  
-Perform-ecs is a tiny and efficient TypeScript based Component-Entity-System framework. It was originally written for [Open Stronghold](https://github.com/fireveined/open-stronghold) - open source clone of Stronghold/Stronghold Crusader engine.
+Perform-ecs is [the fastest](https://github.com/fireveined/ecs-benchmark-js) TypeScript based Component-Entity-System framework. It was originally written for [Open Stronghold](https://github.com/fireveined/open-stronghold) - open source clone of Stronghold/Stronghold Crusader engine.
 
 ## Why Entity Component System?
 
